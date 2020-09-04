@@ -23,15 +23,12 @@ const scrapeLinkedIn = async (data) => {
         await page.click('.mt2');
 
         await page.waitFor(3000);
-        // /detail/recent-activity
         const result = await page.evaluate(() => {
             console.log('Printing...');
             if(document.querySelectorAll('.search-result__info .search-result__result-link')) {
 
                 let profiles = []; 
                 document.querySelectorAll('.search-result__info .search-result__result-link').forEach(element => {
-                    // if(element.innerHTML!=='LinkedIn Member') {
-                        //     console.log(element.innerHTML);
                     if(element.href) {
                         console.log(element.href);
                         profiles.push(element.href);
@@ -42,10 +39,13 @@ const scrapeLinkedIn = async (data) => {
                 return profiles;
             }
         });
-        // await page.waitFor(3000);
         console.log(result);
 
-        // await page.click('.recent_activity_details_all');
+        result.forEach(async(element) => {
+            await page.goto(element+'detail/recent-activity', {
+                waitUntil: 'networkidle0'
+            })
+        });
 
     }
     catch(err) {
