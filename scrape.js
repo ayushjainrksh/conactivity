@@ -22,55 +22,67 @@ const scrapeLinkedIn = async (data) => {
         await page.waitFor(3000);
         await page.click('a.ember-view.link-without-visited-state.inline-block');
         await page.waitFor(3000);
-        const result = await page.evaluate(() => {
-            console.log('Printing...');
-            if(document.querySelectorAll('.search-result__info .search-result__result-link')) {
+        let result = [];
+        for(let pages = 0; pages<2; pages++) {
 
-                let profiles = []; 
-                document.querySelectorAll('.search-result__info .search-result__result-link').forEach(element => {
-                    if(element.href) {
-                        console.log(element.href);
-                        profiles.push(element.href);
-                    }
+            result = await page.evaluate(() => {
+                console.log('Printing...');
+                if(document.querySelectorAll('.search-result__info .search-result__result-link')) {
 
-
-                });
-                return profiles;
-            }
-        });
-        console.log(result);
-
-        let activity = [];
-        for(let i = 0; i<result.length; i++){
-            let element = result[i];
-            await page.goto(element+'detail/recent-activity');
-            const individualActivity = await page.evaluate(() => {
-                console.log('Found...');
-                let eachActivity = [];
-                if(document.querySelectorAll('div.feed-shared-actor__meta.relative > span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal > div > span.visually-hidden')) {
-                    document.querySelectorAll('div.feed-shared-actor__meta.relative > span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal > div > span.visually-hidden').forEach(item=>{
-                        if(item.innerHTML) {
-                            console.log(item.innerHTML);
-                            if(item.innerHTML.match(/[0-9] (minutes?|hours?|days?|week) ago/))
-                                eachActivity.push(item.innerHTML);
+                    let profiles = []; 
+                    document.querySelectorAll('.search-result__info .search-result__result-link').forEach(element => {
+                        if(element.href) {
+                            console.log(element.href);
+                            profiles.push(element.href);
                         }
+
+
                     });
+                    return profiles;
                 }
-                return eachActivity;
             });
-            await activity.push({[element]: individualActivity});
-        }
-        let links = [];
-        activity.filter(item=>{
-            if(Object.value(item).length) {
-                links.push(Object.keys(item));
+            // console.log(result);
+
+            let activity = [];
+            for(let i = 0; i<result.length; i++){
+                let element = result[i];
+                await page.goto(element+'detail/recent-activity');
+                const individualActivity = await page.evaluate(() => {
+                    console.log('Found...');
+                    let eachActivity = [];
+                    if(document.querySelectorAll('div.feed-shared-actor__meta.relative > span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal > div > span.visually-hidden')) {
+                        document.querySelectorAll('div.feed-shared-actor__meta.relative > span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal > div > span.visually-hidden').forEach(item=>{
+                            if(item.innerHTML) {
+                                console.log(item.innerHTML);
+                                if(item.innerHTML.match(/[0-9] (minutes?|hours?|days?|week) ago/))
+                                    eachActivity.push(item.innerHTML);
+                            }
+                        });
+                    }
+                    return eachActivity;
+                });
+                if(individualActivity.length)
+                    await activity.push(element);
+                await page.goBack();
             }
-        });
-        console.log(activity);
+            // let links = [];
+            // activity.forEach(item=>{
+            //     console.log('obj: ', Object.values(item))
+            //     console.log('len: ', Object.values(item).length);
+            //     if(Object.values(item).length) {
+            //         links.push(Object.keys(item));
+            //     }
+            // });
+            console.log(activity);
+            // console.log("LINKS: ", links);
+            result = [];
+            await page.click('.artdeco-pagination__button.artdeco-pagination__button--next');
+            await page.waitFor(2000);
+        }
     }
     catch(err) {
         console.log(err);
     }
   }
 
-  scrapeLinkedIn({username:process.env.EMAIL, password:process.env.PASSWORD, company: "facebook"});
+  scrapeLinkedIn({username:process.env.EMAIL, password:process.env.PASSWORD, company: "amazon"});
