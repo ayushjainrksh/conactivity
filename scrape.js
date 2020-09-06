@@ -103,7 +103,7 @@ const scrapeLinkedIn = async (data) => {
             //Navigate to the next page
             profileLinks = [];
             await page.click('.artdeco-pagination__button.artdeco-pagination__button--next');
-            await page.waitFor(2000);
+            await page.waitForNavigation();
         }
     }
     catch(err) {
