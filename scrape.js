@@ -40,33 +40,35 @@ const scrapeLinkedIn = async (data) => {
         //Login to your account
         await linkedinLogin(data.username, data.password, page);
 
-        await page.goto(`https://www.linkedin.com/company/${data.company}`);
-        await page.waitFor(3000);
+        //Visit the company's page and find the list of employees
+        await page.goto(`https://www.linkedin.com/company/${data.company}`, {
+            waitUntil: 'domcontentloaded',
+        });
+
+        //Visit all employees from the company's page
         await page.click('a.ember-view.link-without-visited-state.inline-block');
-        await page.waitFor(3000);
-        let result = [];
-        for(let pages = 0; pages<2; pages++) {
+        await page.waitForNavigation();
 
-            result = await page.evaluate(() => {
-                console.log('Printing...');
+        let profileLinks = [];
+        for(let pageNumber = 0; pageNumber<2; pageNumber++) {
+
+            //Fetch all profile links from the page
+            profileLinks = await page.evaluate(() => {
                 if(document.querySelectorAll('.search-result__info .search-result__result-link')) {
-
-                    let profiles = []; 
+                    //Store and return profile links
+                    let profiles = [];
                     document.querySelectorAll('.search-result__info .search-result__result-link').forEach(element => {
                         if(element.href) {
-                            console.log(element.href);
                             profiles.push(element.href);
                         }
-
-
                     });
                     return profiles;
                 }
             });
 
             let activity = [];
-            for(let i = 0; i<result.length; i++){
-                let element = result[i];
+            for(let i = 0; i<profileLinks.length; i++){
+                let element = profileLinks[i];
                 await page.goto(element+'detail/recent-activity');
                 const individualActivity = await page.evaluate(() => {
                     console.log('Found...');
@@ -87,7 +89,7 @@ const scrapeLinkedIn = async (data) => {
                 await page.goBack();
             }
             console.log(activity);
-            result = [];
+            profileLinks = [];
             await page.click('.artdeco-pagination__button.artdeco-pagination__button--next');
             await page.waitFor(2000);
         }
