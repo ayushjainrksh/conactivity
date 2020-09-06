@@ -57,38 +57,50 @@ const scrapeLinkedIn = async (data) => {
                 if(document.querySelectorAll('.search-result__info .search-result__result-link')) {
                     //Store and return profile links
                     let profiles = [];
-                    document.querySelectorAll('.search-result__info .search-result__result-link').forEach(element => {
-                        if(element.href) {
-                            profiles.push(element.href);
+                    document.querySelectorAll('.search-result__info .search-result__result-link').forEach(profile => {
+                        if(profile.href) {
+                            profiles.push(profile.href);
                         }
                     });
                     return profiles;
                 }
             });
 
-            let activity = [];
-            for(let i = 0; i<profileLinks.length; i++){
-                let element = profileLinks[i];
-                await page.goto(element+'detail/recent-activity');
-                const individualActivity = await page.evaluate(() => {
-                    console.log('Found...');
-                    let eachActivity = [];
+            //Visit activity page and filter the list of active employees
+            let activeEmployees = [];
+            for(let employeeUrl = 0; employeeUrl<profileLinks.length; employeeUrl++){
+                let profileLink = profileLinks[employeeUrl];
+                
+                //Visit activity page
+                await page.goto(profileLink+'detail/recent-activity');
+
+                //Find time of last activities of a user(likes, comments, posts)
+                const individualActivities = await page.evaluate(() => {
+                    let timeOfActivity = [];
                     if(document.querySelectorAll('div.feed-shared-actor__meta.relative > span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal > div > span.visually-hidden')) {
-                        document.querySelectorAll('div.feed-shared-actor__meta.relative > span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal > div > span.visually-hidden').forEach(item=>{
+                        document.querySelectorAll('div.feed-shared-actor__meta.relative > span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal > div > span.visually-hidden')
+                        .forEach(item=>{
                             if(item.innerHTML) {
-                                console.log(item.innerHTML);
+                                //Log all user activity within a week
                                 if(item.innerHTML.match(/[0-9] (minutes?|hours?|days?|week) ago/))
-                                    eachActivity.push(item.innerHTML);
+                                    timeOfActivity.push(item.innerHTML);
                             }
                         });
                     }
-                    return eachActivity;
+                    return timeOfActivity;
                 });
-                if(individualActivity.length)
-                    await activity.push(element);
+
+                //Return links to active employees
+                if(individualActivities.length)
+                    await activeEmployees.push(profileLink);
+
+                //Return to the search page
                 await page.goBack();
             }
-            console.log(activity);
+
+            console.log(`Active users on page ${pageNumber}: `, activeEmployees);
+
+            //Navigate to the next page
             profileLinks = [];
             await page.click('.artdeco-pagination__button.artdeco-pagination__button--next');
             await page.waitFor(2000);
