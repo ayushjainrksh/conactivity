@@ -1,22 +1,44 @@
+//Imports
 const puppeteer = require('puppeteer');
 require('dotenv').config();
 
+/**
+ * Automated login to LinkedIn
+ * @param {string} username User email 
+ * @param {string} password User password
+ */
+const linkedinLogin = async (username, password, page) => {
+    console.log(`Logging in with email: ${process.env.EMAIL}`);
+
+    await page.type('#session_key', username);
+    await page.type('#session_password', password);
+    await page.click('.sign-in-form__submit-button');
+
+    // Wait for page load
+    await page.waitFor(3000);
+}
+
+/**
+ * Scrape LinkedIn to find active users for a given company
+ * @param {{email: string, password: string, company: string}} data An object with login credentials and the company's LinkedIn handle
+ */
 const scrapeLinkedIn = async (data) => {
     try {
-        console.log(process.env.EMAIL);
-        console.log(`Logging in...`);
+        //Launch a chromium automated session
         const browser = await puppeteer.launch( { headless: false, dumpio: true, args: ['--no-sandbox'], });
+
+        //Open a new tab
         const page = await browser.newPage();
-        await page.setViewport({width: 1200, height: 1200})
+
+        //Page configurations
+        await page.setViewport({width: 1200, height: 1200});
+        await page.setDefaultNavigationTimeout(0);
+
+        //Visit LinkedIn
         await page.goto(`https://www.linkedin.com/`);
 
-
-
-        await page.type('#session_key', data.username);
-        await page.type('#session_password', data.password);
-        await page.click('.sign-in-form__submit-button');
-        // Wait for page load
-        await page.waitFor(3000);
+        //Login to your account
+        await linkedinLogin(data.username, data.password, page);
 
         await page.goto(`https://www.linkedin.com/company/${data.company}`);
         await page.waitFor(3000);
@@ -41,7 +63,6 @@ const scrapeLinkedIn = async (data) => {
                     return profiles;
                 }
             });
-            // console.log(result);
 
             let activity = [];
             for(let i = 0; i<result.length; i++){
@@ -65,16 +86,7 @@ const scrapeLinkedIn = async (data) => {
                     await activity.push(element);
                 await page.goBack();
             }
-            // let links = [];
-            // activity.forEach(item=>{
-            //     console.log('obj: ', Object.values(item))
-            //     console.log('len: ', Object.values(item).length);
-            //     if(Object.values(item).length) {
-            //         links.push(Object.keys(item));
-            //     }
-            // });
             console.log(activity);
-            // console.log("LINKS: ", links);
             result = [];
             await page.click('.artdeco-pagination__button.artdeco-pagination__button--next');
             await page.waitFor(2000);
@@ -85,4 +97,4 @@ const scrapeLinkedIn = async (data) => {
     }
   }
 
-  scrapeLinkedIn({username:process.env.EMAIL, password:process.env.PASSWORD, company: "amazon"});
+  scrapeLinkedIn({username:process.env.EMAIL, password:process.env.PASSWORD, company: process.env.COMPANY});
