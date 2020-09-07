@@ -1,14 +1,21 @@
+*This project is being actively developed and maintained. If you would like to receive updates about the progress you can follow [@ayushjn_](https://twitter.com/ayushjn_) on Twitter.*
+
 # ConActivity
-Connect with activity
+*"Connect with active LinkedIn users"*
 
 **Do you find it difficult to network with people on LinkedIn?**
 If most of your connection requests to recruiters or employees are not being accepted then there's a possibiliy that:
 - You didn't attach an invite note with the connection request (but you can eliminate this next time when you send the requests).
 - A particular employee might not be interested in accepting the connections or is not interested in your profile (this rarely happens).
+- The most frequent reason for a connection request not being accepted is that the employee **may not be active** on LinkedIn or does not have time to check their account.
 
-The most frequent reason for a connection request not being accepted is that the employee may not be active on LinkedIn or does not have time to check their account.
+To avoid waste of time and effort required in sending connection request to inactive LinkedIn members, use **ConActivity**.
 
-To avoid waste of time and effort required in sending connection request to inactive LinkedIn members, use **ConActivity**, a tool that scrapes LinkedIn data and returns the profile links of a company's employees active on LinkedIn. Using **ConActivity** you can target active LinkedIn users and send connection request.
+**ConActivity** is a tool that scrapes LinkedIn data and returns the profile links of a company's employees active on LinkedIn. Using **ConActivity** you can target active LinkedIn users and send connection requests.
+
+## Features
+- Get direct LinkedIn handles of active employees of a company in a few minutes.
+- LinkedIn users won't be notified when you use the script as it doesn't visit their profiles.
 
 ## How it works?
 1. User enters the company's LinkedIn handle and runs ConActivity.
@@ -47,3 +54,14 @@ To avoid waste of time and effort required in sending connection request to inac
   #### `npm start`
 
 > Wait for the script to complete parsing. The links would appear on the terminal. You can visit the active user profiles and connect by attaching a invite note. Update the `.env` file to repeat the process for any other company.
+
+## Caveats
+- Problematic with slow internet speed (check your internet connection and try again).
+- There's a limit to number of LinkedIn logins at a given time (if you see a security check on login, please wait for some time before using the script again).
+
+## Contributing :heart:
+- Fork the repo, make changes, submit a PR. It's as simple as it sounds.
+- If you find an issue, you can report it on GitHub.
+- You can also submit feature requests using GitHub issues.
+
+> If you get stuck somewhere, feel free to shoot a dm on my socials.
