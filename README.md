@@ -1,17 +1,18 @@
-*This project is being actively developed and maintained. If you would like to receive updates about the progress you can follow [@ayushjn_](https://twitter.com/ayushjn_) on Twitter.*
+*Hi :wave:, this project is being actively developed and maintained. If you would like to receive updates about the progress you can follow [@ayushjn_](https://twitter.com/ayushjn_) on Twitter :bust_in_silhouette:.*
 
 # ConActivity
 *"Connect with active LinkedIn users"*
 
 **Do you find it difficult to network with people on LinkedIn?**
+
 If most of your connection requests to recruiters or employees are not being accepted then there's a possibiliy that:
 - You didn't attach an invite note with the connection request (but you can eliminate this next time when you send the requests).
 - A particular employee might not be interested in accepting the connections or is not interested in your profile (this rarely happens).
-- The most frequent reason for a connection request not being accepted is that the employee **may not be active** on LinkedIn or does not have time to check their account.
+- The **most frequent reason** for a connection request not being accepted is that the employee **may not be active** on LinkedIn or does not have time to check their account.
 
 To avoid waste of time and effort required in sending connection request to inactive LinkedIn members, use **ConActivity**.
 
-**ConActivity** is a tool that scrapes LinkedIn data and returns the profile links of a company's employees active on LinkedIn. Using **ConActivity** you can target active LinkedIn users and send connection requests.
+**ConActivity** is a tool that scrapes LinkedIn data and returns the profile links of a company's employees active on LinkedIn. Using ConActivity you can target active LinkedIn users and send connection requests.
 
 ## Features
 - Get direct LinkedIn handles of active employees of a company in a few minutes.
