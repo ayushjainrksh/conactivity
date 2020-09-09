@@ -23,10 +23,10 @@ const linkedinLogin = async (username, password, page) => {
  * @param {{email: string, password: string, company: string}} data An object with login credentials and the company's LinkedIn handle
  */
 const scrapeLinkedIn = async (data) => {
-    try {
-        //Launch a chromium automated session
-        const browser = await puppeteer.launch( { headless: false, dumpio: true, args: ['--no-sandbox'], });
+    //Launch a chromium automated session
+    const browser = await puppeteer.launch( { headless: false, dumpio: true, args: ['--no-sandbox'], });
 
+    try {
         //Open a new tab
         const page = await browser.newPage();
 
@@ -40,13 +40,21 @@ const scrapeLinkedIn = async (data) => {
         //Login to your account
         await linkedinLogin(data.username, data.password, page);
 
-        //Visit the company's page and find the list of employees
-        await page.goto(`https://www.linkedin.com/company/${data.company}`, {
-            waitUntil: 'domcontentloaded',
-        });
+        try{
+            //Visit the company's page and find the list of employees
+            await page.goto(`https://www.linkedin.com/company/${data.company}`, {
+                waitUntil: 'domcontentloaded',
+            });
 
-        //Visit all employees from the company's page
-        await page.click('a.ember-view.link-without-visited-state.inline-block');
+            //Visit all employees from the company's page
+            await page.click('a.ember-view.link-without-visited-state.inline-block');
+        } catch(e) {
+            console.error('Oops! An error occured while trying to find the company\'s page.' + '\n' +
+                'The reason for this error can be either the browser was closed while execution or you entered an invalid company\'s LinkedIn handle.'
+                + '\n' + 'Please check the LinkedIn handle of the company you\'re trying to find and try again.');
+            await browser.close();
+        }
+
         await page.waitForNavigation();
 
         let profileLinks = [];
@@ -105,9 +113,12 @@ const scrapeLinkedIn = async (data) => {
             await page.click('.artdeco-pagination__button.artdeco-pagination__button--next');
             await page.waitForNavigation();
         }
+        await browser.close();
     }
     catch(err) {
-        console.log(err);
+        console.error("Oops! An error occured.");
+        console.error(err);
+        await browser.close();
     }
   }
 
