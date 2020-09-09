@@ -60,9 +60,12 @@ To avoid waste of time and effort required in sending connection request to inac
 - Problematic with slow internet speed (check your internet connection and try again).
 - There's a limit to number of LinkedIn logins at a given time (if you see a security check on login, please wait for some time before using the script again).
 
+## LICENCE
+ConActivity is licenced under the [MIT Licence](https://github.com/ayushjainrksh/conactivity/blob/master/LICENSE).
+
 ## Contributing :heart:
-- Fork the repo, make changes, submit a PR. It's as simple as it sounds.
-- If you find an issue, you can report it on GitHub.
+- Fork the repo, checkout to a new branch, make changes, submit a PR. It's as simple as it sounds.
+- If you find an issue, you can report it on GitHub issues.
 - You can also submit feature requests using GitHub issues.
 
-> If you get stuck somewhere, feel free to shoot a dm on my socials.
+> If you get stuck somewhere, feel free to shoot a DM on my socials.
