@@ -15,7 +15,7 @@ const linkedinLogin = async (username, password, page) => {
     await page.click('.sign-in-form__submit-button');
 
     // Wait for page load
-    await page.waitFor(3000);
+    await page.waitForNavigation();
 }
 
 /**
@@ -50,8 +50,8 @@ const scrapeLinkedIn = async (data) => {
             await page.click('a.ember-view.link-without-visited-state.inline-block');
         } catch(e) {
             console.error('Oops! An error occured while trying to find the company\'s page.' + '\n' +
-                'The reason for this error can be either the browser was closed while execution or you entered an invalid company\'s LinkedIn handle.'
-                + '\n' + 'Please check the LinkedIn handle of the company you\'re trying to find and try again.');
+                'The reason for this error can be either the browser was closed while execution or you entered invalid data in env file.'
+                + '\n' + 'Please check the LinkedIn handle of the company you\'re trying to find and your credentials and try again.');
             await browser.close();
         }
 
