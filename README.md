@@ -12,7 +12,7 @@
   <a href="https://github.com/ayushjainrksh/conactivity/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="ConActivity is released under the MIT license." />
   </a>
-  <a href="https://reactnative.dev/docs/contributing">
+  <a href="https://github.com/ayushjainrksh/conactivity/blob/master/CONTRIBUTING.md">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
   <a href="http://hits.dwyl.com/ayushjainrksh/conactivity">
