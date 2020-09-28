@@ -84,8 +84,9 @@ Try it out!
 ConActivity is licenced under the [MIT Licence](https://github.com/ayushjainrksh/conactivity/blob/master/LICENSE).
 
 ## Contributing :heart:
-- Fork the repo, checkout to a new branch, make changes, submit a PR. It's as simple as it sounds.
-- If you find an issue, you can report it on GitHub issues.
-- You can also submit feature requests using GitHub issues.
+Follow [contributing.md](https://github.com/ayushjainrksh/conactivity/blob/master/CONTRIBUTING.md) to start contributions.
 
-> If you get stuck somewhere, feel free to shoot a DM on my socials.
+## Code of Conduct
+Read our [code_of_conduct.md](https://github.com/ayushjainrksh/conactivity/blob/master/CODE_OF_CONDUCT.md)
+
+> If you get stuck somewhere, feel free to open an issue for discussion or shoot a DM on my socials.
