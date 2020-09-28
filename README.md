@@ -16,7 +16,7 @@
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
   <a href="http://hits.dwyl.com/ayushjainrksh/conactivity">
-    <img src="http://hits.dwyl.com/ayushjainrksh/conactivity.svg" />
+    <img src="http://hits.dwyl.com/ayushjainrksh/conactivity.svg" alt="HitCount"/>
   </a>
   <a href="https://twitter.com/intent/follow?screen_name=ayushjn_">
     <img src="https://img.shields.io/twitter/follow/ayushjn_.svg?label=Follow%20@ayushjn_" alt="Follow @ayushjn_" />
