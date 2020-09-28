@@ -5,7 +5,7 @@
 </h1>
 
 <p align="center">
-    *"Connect with active LinkedIn users"*
+    <em>"Connect with active LinkedIn users"</em>
 </p>
 
 <p align="center">
@@ -34,22 +34,8 @@ To avoid waste of time and effort required in sending connection request to inac
 
 **ConActivity** is a tool that scrapes LinkedIn data and returns the profile links of a company's employees active on LinkedIn. Using ConActivity you can target active LinkedIn users and send connection requests.
 
-## Features
-- Get direct LinkedIn handles of active employees of a company in a few minutes.
-- LinkedIn users won't be notified when you use the script as it doesn't visit their profiles.
-
-## How it works?
-1. User enters the company's LinkedIn handle and runs ConActivity.
-2. The script launches an automated browser tab.
-3. The user is logged in with their account credentials automatically.
-4. The script redirects to company's profile page and visits `all employees` page from there.
-5. Now the script scrapes all the links to user profiles and visits their activity page one by one.
-6. It parses the last 5 activities(likes, comments, post, etc.) of employees.
-7. The script return urls of the employees active on linkedIn within a week.
-8. You can use these URLs to visit the profiles and send connection requests.
-
-
 ## Getting started
+Try it out!
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/)
@@ -75,6 +61,20 @@ To avoid waste of time and effort required in sending connection request to inac
   #### `npm start`
 
 > Wait for the script to complete parsing. The links would appear on the terminal. You can visit the active user profiles and connect by attaching a invite note. Update the `.env` file to repeat the process for any other company.
+
+## How it works?
+1. User enters the company's LinkedIn handle and runs ConActivity.
+2. The script launches an automated browser tab.
+3. The user is logged in with their account credentials automatically.
+4. The script redirects to company's profile page and visits `all employees` page from there.
+5. Now the script scrapes all the links to user profiles and visits their activity page one by one.
+6. It parses the last 5 activities(likes, comments, post, etc.) of employees.
+7. The script return urls of the employees active on linkedIn within a week.
+8. You can use these URLs to visit the profiles and send connection requests.
+
+## Features
+- Get direct LinkedIn handles of active employees of a company in a few minutes.
+- LinkedIn users won't be notified when you use the script as it doesn't visit their profiles.
 
 ## Caveats
 - Problematic with slow internet speed (check your internet connection and try again).
