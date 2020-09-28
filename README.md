@@ -1,7 +1,27 @@
 *Hi :wave:, this project is being actively developed and maintained. If you would like to receive updates about the progress you can follow [@ayushjn_](https://twitter.com/ayushjn_) on Twitter :bust_in_silhouette:.*
 
-# ConActivity
-*"Connect with active LinkedIn users"*
+<h1 align="center">
+    ConActivity
+</h1>
+
+<p align="center">
+    *"Connect with active LinkedIn users"*
+</p>
+
+<p align="center">
+  <a href="https://github.com/ayushjainrksh/conactivity/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="ConActivity is released under the MIT license." />
+  </a>
+  <a href="https://reactnative.dev/docs/contributing">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
+  </a>
+  <a href="http://hits.dwyl.com/ayushjainrksh/conactivity">
+    <img src="http://hits.dwyl.com/ayushjainrksh/conactvity.svg" />
+  </a>
+  <a href="https://twitter.com/intent/follow?screen_name=ayushjn_">
+    <img src="https://img.shields.io/twitter/follow/ayushjn_.svg?label=Follow%20@ayushjn_" alt="Follow @ayushjn_" />
+  </a>
+</p>
 
 **Do you find it difficult to network with people on LinkedIn?**
 
