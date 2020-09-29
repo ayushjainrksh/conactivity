@@ -87,3 +87,8 @@ Follow [contributing.md](https://github.com/ayushjainrksh/conactivity/blob/maste
 Read our [code_of_conduct.md](https://github.com/ayushjainrksh/conactivity/blob/master/CODE_OF_CONDUCT.md)
 
 > If you get stuck somewhere, feel free to open an issue for discussion or shoot a DM on my socials.
+
+## Terms of service
+Please read LinkedIn's [User agreement](https://www.linkedin.com/legal/user-agreement) before using this script. 
+
+This script is being used for educational purposes only and discourages users to scrape large amount of data at a time as this can lead to their LinkedIn account termination. The author or any of the contributor doesn't hold any responsibility in such a case whatsoever. It is recommended to use a secondary LinkedIn account to use the script for a longer period of time to avoid risk of losing your LinkedIn account.
