@@ -29,6 +29,15 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "godslayer201",
+      "name": "Rachitt Shah",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/57140143?v=4",
+      "profile": "https://godslayer201.github.io/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
