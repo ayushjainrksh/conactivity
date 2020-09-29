@@ -1,4 +1,4 @@
-_Hi :wave:, this project is being actively developed and maintained. If you would like to receive updates about the progress you can follow [@ayushjn\_](https://twitter.com/ayushjn_) on Twitter :bust_in_silhouette:._
+_Hi :wave:, this project is being actively developed and maintained. If you would like to receive updates about the progress you can follow [@ayushjn\_](https://twitter.com/ayushjn_) on Twitter :bust*in_silhouette:.*
 
 <h1 align="center">
     ConActivity
@@ -119,7 +119,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/ayushjainrksh"><img src="https://avatars3.githubusercontent.com/u/33171576?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ayush Jain</b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=ayushjainrksh" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/ayushjainrksh"><img src="https://avatars3.githubusercontent.com/u/33171576?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ayush Jain</b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=ayushjainrksh" title="Code">💻</a> <a href="https://github.com/ayushjainrksh/conactivity/commits?author=ayushjainrksh" title="Documentation">📖</a></td>
   </tr>
 </table>
 
