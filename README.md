@@ -50,9 +50,9 @@ Try it out!
     #### `touch .env`
   - Add your LinkedIn account credentials and the company's LinkedIn handle. Your `.env` file should look like:
     ```
-    EMAIL:<LinkedIn email ID>
-    PASSWORD:<LinkedIn password>
-    COMPANY:google
+    EMAIL=<LinkedIn email ID>
+    PASSWORD=<LinkedIn password>
+    COMPANY=google
     ```
 - Now you're all set. Run the script.
   #### `npm start`
