@@ -1,4 +1,4 @@
-*Hi :wave:, this project is being actively developed and maintained. If you would like to receive updates about the progress you can follow [@ayushjn_](https://twitter.com/ayushjn_) on Twitter :bust_in_silhouette:.*
+_Hi :wave:, this project is being actively developed and maintained. If you would like to receive updates about the progress you can follow [@ayushjn\_](https://twitter.com/ayushjn_) on Twitter :bust_in_silhouette:._
 
 <h1 align="center">
     ConActivity
@@ -15,6 +15,9 @@
   <a href="https://github.com/ayushjainrksh/conactivity/blob/master/CONTRIBUTING.md">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
+  <a href="#contributors-">
+    <img src="https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square" alt="All Contributors" />
+  </a>
   <a href="https://twitter.com/intent/follow?screen_name=ayushjn_">
     <img src="https://img.shields.io/twitter/follow/ayushjn_.svg?label=Follow%20@ayushjn_" alt="Follow @ayushjn_" />
   </a>
@@ -23,6 +26,7 @@
 **Do you find it difficult to network with people on LinkedIn?**
 
 If most of your connection requests to recruiters or employees are not being accepted then there's a possibiliy that:
+
 - You didn't attach an invite note with the connection request (but you can eliminate this next time when you send the requests).
 - A particular employee might not be interested in accepting the connections or is not interested in your profile (this rarely happens).
 - The **most frequent reason** for a connection request not being accepted is that the employee **may not be active** on LinkedIn or does not have time to check their account.
@@ -32,13 +36,16 @@ To avoid waste of time and effort required in sending connection request to inac
 **ConActivity** is a tool that scrapes LinkedIn data and returns the profile links of a company's employees active on LinkedIn. Using ConActivity you can target active LinkedIn users and send connection requests.
 
 ## Getting started
+
 Try it out!
 
 ### Prerequisites
+
 - [Node.js](https://nodejs.org/)
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
 ### Usage
+
 - Clone the repo.
   #### `git clone https://github.com/ayushjainrksh/linkedin-scraper.git`
 - Navigate to the cloned repo.
@@ -60,6 +67,7 @@ Try it out!
 > Wait for the script to complete parsing. The links would appear on the terminal. You can visit the active user profiles and connect by attaching a invite note. Update the `.env` file to repeat the process for any other company.
 
 ## How it works?
+
 1. User enters the company's LinkedIn handle and runs ConActivity.
 2. The script launches an automated browser tab.
 3. The user is logged in with their account credentials automatically.
@@ -70,25 +78,51 @@ Try it out!
 8. You can use these URLs to visit the profiles and send connection requests.
 
 ## Features
+
 - Get direct LinkedIn handles of active employees of a company in a few minutes.
 - LinkedIn users won't be notified when you use the script as it doesn't visit their profiles.
 
 ## Caveats
+
 - Problematic with slow internet speed (check your internet connection and try again).
 - There's a limit to number of LinkedIn logins at a given time (if you see a security check on login, please wait for some time before using the script again).
 
 ## LICENCE
+
 ConActivity is licenced under the [MIT Licence](https://github.com/ayushjainrksh/conactivity/blob/master/LICENSE).
 
 ## Contributing :heart:
+
 Follow [contributing.md](https://github.com/ayushjainrksh/conactivity/blob/master/CONTRIBUTING.md) to start contributions.
 
 ## Code of Conduct
+
 Read our [code_of_conduct.md](https://github.com/ayushjainrksh/conactivity/blob/master/CODE_OF_CONDUCT.md)
 
 > If you get stuck somewhere, feel free to open an issue for discussion or shoot a DM on my socials.
 
 ## Terms of service
-Please read LinkedIn's [User agreement](https://www.linkedin.com/legal/user-agreement) before using this script. 
+
+Please read LinkedIn's [User agreement](https://www.linkedin.com/legal/user-agreement) before using this script.
 
 This script is being used for educational purposes only and discourages users to scrape large amount of data at a time as this can lead to their LinkedIn account termination. The author or any of the contributor doesn't hold any responsibility in such a case whatsoever. It is recommended to use a secondary LinkedIn account to use the script for a longer period of time to avoid risk of losing your LinkedIn account.
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/ayushjainrksh"><img src="https://avatars3.githubusercontent.com/u/33171576?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ayush Jain</b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=ayushjainrksh" title="Code">💻</a> <a href="https://github.com/ayushjainrksh/conactivity/commits?author=ayushjainrksh" title="Documentation">📖</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
