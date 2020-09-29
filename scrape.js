@@ -15,7 +15,13 @@ const linkedinLogin = async (username, password, page) => {
   await page.click(".sign-in-form__submit-button");
 
   // Wait for page load
-  await page.waitForNavigation();
+  return new Promise((resolve, reject) => {
+    page.on("framenavigated", () => {
+      if (page.url().startsWith("https://www.linkedin.com/feed")) {
+        return resolve();
+      }
+    });
+  });
 };
 
 /**
