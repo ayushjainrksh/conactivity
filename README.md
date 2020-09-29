@@ -118,6 +118,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/ayushjainrksh"><img src="https://avatars3.githubusercontent.com/u/33171576?v=4" width="100px;" alt=""/><br /><sub><b>Ayush Jain</b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=ayushjainrksh" title="Code">💻</a> <a href="https://github.com/ayushjainrksh/conactivity/commits?author=ayushjainrksh" title="Documentation">📖</a></td>
     <td align="center"><a href="http://nancychauhan.in/"><img src="https://avatars2.githubusercontent.com/u/37153406?v=4" width="100px;" alt=""/><br /><sub><b>Nancy Chauhan </b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=Nancy-Chauhan" title="Code">💻</a> <a href="https://github.com/ayushjainrksh/conactivity/issues?q=author%3ANancy-Chauhan" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://godslayer201.github.io/"><img src="https://avatars3.githubusercontent.com/u/57140143?v=4" width="100px;" alt=""/><br /><sub><b>Rachitt Shah</b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=godslayer201" title="Documentation">📖</a></td>
   </tr>
 </table>
 
