@@ -19,7 +19,18 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "Nancy-Chauhan",
+      "name": "Nancy Chauhan ",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/37153406?v=4",
+      "profile": "http://nancychauhan.in/",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
