@@ -15,6 +15,9 @@ _Hi :wave:, this project is being actively developed and maintained. If you woul
   <a href="https://github.com/ayushjainrksh/conactivity/blob/master/CONTRIBUTING.md">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
+  <a href="#contributors-">
+    <img src="https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square" alt="All Contributors" />
+  </a>
   <a href="https://twitter.com/intent/follow?screen_name=ayushjn_">
     <img src="https://img.shields.io/twitter/follow/ayushjn_.svg?label=Follow%20@ayushjn_" alt="Follow @ayushjn_" />
   </a>
@@ -105,12 +108,6 @@ Please read LinkedIn's [User agreement](https://www.linkedin.com/legal/user-agre
 This script is being used for educational purposes only and discourages users to scrape large amount of data at a time as this can lead to their LinkedIn account termination. The author or any of the contributor doesn't hold any responsibility in such a case whatsoever. It is recommended to use a secondary LinkedIn account to use the script for a longer period of time to avoid risk of losing your LinkedIn account.
 
 ## Contributors ✨
-
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 

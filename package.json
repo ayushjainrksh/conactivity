@@ -19,6 +19,7 @@
     "puppeteer": "^5.2.1"
   },
   "devDependencies": {
+    "all-contributors-cli": "^6.17.4",
     "husky": "^4.3.0",
     "prettier": "2.1.1",
     "pretty-quick": "^3.0.0"
