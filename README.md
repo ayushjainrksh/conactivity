@@ -1,4 +1,4 @@
-_Hi :wave:, this project is being actively developed and maintained. If you would like to receive updates about the progress you can follow [@ayushjn\_](https://twitter.com/ayushjn_) on Twitter :bust*in_silhouette:.*
+_Hi :wave:, this project is being actively developed and maintained. If you would like to receive updates about the progress you can follow [@ayushjn\_](https://twitter.com/ayushjn_) on Twitter :bust_in_silhouette:._
 
 <h1 align="center">
     ConActivity
