@@ -1,4 +1,4 @@
-_Hi :wave:, this project is being actively developed and maintained. If you would like to receive updates about the progress you can follow [@ayushjn\_](https://twitter.com/ayushjn_) on Twitter :bust_in_silhouette:._
+*Hi :wave:, this project is being actively developed and maintained. If you would like to receive updates about the progress you can follow [@ayushjn_](https://twitter.com/ayushjn_) on Twitter :bust_in_silhouette:.*
 
 <h1 align="center">
     ConActivity
@@ -15,9 +15,11 @@ _Hi :wave:, this project is being actively developed and maintained. If you woul
   <a href="https://github.com/ayushjainrksh/conactivity/blob/master/CONTRIBUTING.md">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
+  <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
   <a href="#contributors-">
-    <img src="https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square" alt="All Contributors" />
+    <img src="https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square" alt="All Contributors" />
   </a>
+  <!-- ALL-CONTRIBUTORS-BADGE:END -->
   <a href="https://twitter.com/intent/follow?screen_name=ayushjn_">
     <img src="https://img.shields.io/twitter/follow/ayushjn_.svg?label=Follow%20@ayushjn_" alt="Follow @ayushjn_" />
   </a>
@@ -124,6 +126,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
