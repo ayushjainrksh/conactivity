@@ -1,5 +1,7 @@
 //Imports
 const puppeteer = require("puppeteer");
+const jsonfile = require("jsonfile");
+const fileExistSync = require("fs").existsSync;
 require("dotenv").config();
 
 /**
@@ -16,8 +18,20 @@ const linkedinLogin = async (username, password, page) => {
 
   // Wait for page load
   return new Promise((resolve, reject) => {
-    page.on("framenavigated", () => {
+    page.on("framenavigated", async () => {
       if (page.url().startsWith("https://www.linkedin.com/feed")) {
+        // Save the session cookies
+        const cookiesObject = await page.cookies();
+        // Store cookies in cookie.json to persist the session
+        await jsonfile.writeFile(
+          "./cookie.json",
+          cookiesObject,
+          { spaces: 2 },
+          (err) => {
+            if (err) console.log("Error while writing file: ", err);
+            else console.log("Session saved successfully!");
+          }
+        );
         return resolve();
       }
     });
@@ -44,16 +58,30 @@ const scrapeLinkedIn = async (data) => {
     await page.setViewport({ width: 1200, height: 1200 });
     await page.setDefaultNavigationTimeout(0);
 
-    //Visit LinkedIn
-    await page.goto(`https://www.linkedin.com/`);
+    //Check if cookies are stored in cookie.json and use that data to skip login
+    const previousSession = fileExistSync("./cookie.json");
+    if (previousSession) {
+      //Load the cookies
+      const cookiesArr = require(`.${"/cookie.json"}`);
+      if (cookiesArr.length !== 0) {
+        //Set each browser cookie
+        for (let cookie of cookiesArr) {
+          await page.setCookie(cookie);
+        }
+        console.log("Previous session loaded successfully!");
+      }
+    } else {
+      //Visit LinkedIn
+      await page.goto(`https://www.linkedin.com/`);
 
-    //Login to your account
-    await linkedinLogin(data.username, data.password, page);
+      //Login to your account
+      await linkedinLogin(data.username, data.password, page);
+    }
 
     try {
       //Visit the company's page and find the list of employees
       await page.goto(`https://www.linkedin.com/company/${data.company}`, {
-        waitUntil: "domcontentloaded",
+        waitUntil: ["domcontentloaded", "networkidle2"],
       });
 
       //Visit all employees from the company's page

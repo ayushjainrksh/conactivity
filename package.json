@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "dotenv": "^8.2.0",
+    "jsonfile": "^6.0.1",
     "puppeteer": "^5.2.1"
   },
   "devDependencies": {
