@@ -17,7 +17,7 @@ const linkedinLogin = async (username, password, page) => {
   await page.click(".sign-in-form__submit-button");
 
   // Wait for page load
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     page.on("framenavigated", async () => {
       if (page.url().startsWith("https://www.linkedin.com/feed")) {
         // Save the session cookies
@@ -105,14 +105,14 @@ const scrapeLinkedIn = async (data) => {
       profileLinks = await page.evaluate(() => {
         if (
           document.querySelectorAll(
-            ".search-result__info .search-result__result-link"
+            ".reusable-search__entity-results-list .entity-result__title-text a"
           )
         ) {
           //Store and return profile links
           let profiles = [];
           document
             .querySelectorAll(
-              ".search-result__info .search-result__result-link"
+              ".reusable-search__entity-results-list .entity-result__title-text a"
             )
             .forEach((profile) => {
               if (profile.href) {
@@ -133,8 +133,9 @@ const scrapeLinkedIn = async (data) => {
         let profileLink = profileLinks[employeeUrl];
 
         //Visit activity page
-        await page.goto(profileLink + "detail/recent-activity");
-
+        await page.goto(profileLink + "/detail/recent-activity", {
+          waitUntil: ["domcontentloaded"],
+        });
         //Find time of last activities of a user(likes, comments, posts)
         const individualActivities = await page.evaluate(() => {
           let timeOfActivity = [];
