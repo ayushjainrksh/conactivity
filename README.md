@@ -8,22 +8,12 @@
     <em>"Connect with active LinkedIn users"</em>
 </p>
 
-<p align="center">
-  <a href="https://github.com/ayushjainrksh/conactivity/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="ConActivity is released under the MIT license." />
-  </a>
-  <a href="https://github.com/ayushjainrksh/conactivity/blob/master/CONTRIBUTING.md">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
-  </a>
-  <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-  <a href="#contributors-">
-    <img src="https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square" alt="All Contributors" />
-  </a>
-  <!-- ALL-CONTRIBUTORS-BADGE:END -->
-  <a href="https://twitter.com/intent/follow?screen_name=ayushjn_">
-    <img src="https://img.shields.io/twitter/follow/ayushjn_.svg?label=Follow%20@ayushjn_" alt="Follow @ayushjn_" />
-  </a>
-</p>
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ayushjainrksh/conactivity/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/ayushjainrksh/conactivity.svg)](https://GitHub.com/ayushjainrksh/conactivity/issues/)
+[![PRs welcome!](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/ayushjainrksh/conactivity/blob/master/CONTRIBUTING.md)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![GitHub stars](https://img.shields.io/github/stars/ayushjainrksh/conactivity.svg?style=social&label=Star&maxAge=2592000)](https://github.com/ayushjainrksh/conactivity/stargazers/)
+[![Follow @ayushjn_](https://img.shields.io/twitter/follow/ayushjn_.svg?label=Follow%20@ayushjn_)](https://twitter.com/intent/follow?screen_name=ayushjn_)
 
 **Do you find it difficult to network with people on LinkedIn?**
 
