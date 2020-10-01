@@ -1,7 +1,8 @@
 ## Description
+
 <!-- Please include a summary of the change/changes and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change. -->
 
-**Fixes** # (issue)
+Fixes #(issue)
 
 ## Type of change
 
@@ -13,4 +14,5 @@
 - [ ] This change requires a documentation update
 
 ## Screenshots of the change
+
 <!--(Optional) Add screenshots to display your changes -->
