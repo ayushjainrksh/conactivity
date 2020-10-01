@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[logo]: https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square 'All Contributors'
+[logo]: https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square 'All Contributors'
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 *Hi :wave:, this project is being actively developed and maintained. If you would like to receive updates about the progress, you can follow [@ayushjn_](https://twitter.com/ayushjn_) on Twitter :bust_in_silhouette:.*
@@ -112,15 +112,15 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/ayushjainrksh"><img src="https://avatars3.githubusercontent.com/u/33171576?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ayush Jain</b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=ayushjainrksh" title="Code">💻</a> <a href="https://github.com/ayushjainrksh/conactivity/commits?author=ayushjainrksh" title="Documentation">📖</a></td>
-    <td align="center"><a href="http://nancychauhan.in/"><img src="https://avatars2.githubusercontent.com/u/37153406?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nancy Chauhan </b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=Nancy-Chauhan" title="Code">💻</a> <a href="https://github.com/ayushjainrksh/conactivity/issues?q=author%3ANancy-Chauhan" title="Bug reports">🐛</a></td>
-    <td align="center"><a href="https://godslayer201.github.io/"><img src="https://avatars3.githubusercontent.com/u/57140143?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Rachitt Shah</b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=godslayer201" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/ayushjainrksh"><img src="https://avatars3.githubusercontent.com/u/33171576?v=4" width="100px;" alt=""/><br /><sub><b>Ayush Jain</b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=ayushjainrksh" title="Code">💻</a> <a href="https://github.com/ayushjainrksh/conactivity/commits?author=ayushjainrksh" title="Documentation">📖</a></td>
+    <td align="center"><a href="http://nancychauhan.in/"><img src="https://avatars2.githubusercontent.com/u/37153406?v=4" width="100px;" alt=""/><br /><sub><b>Nancy Chauhan </b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=Nancy-Chauhan" title="Code">💻</a> <a href="https://github.com/ayushjainrksh/conactivity/issues?q=author%3ANancy-Chauhan" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://godslayer201.github.io/"><img src="https://avatars3.githubusercontent.com/u/57140143?v=4" width="100px;" alt=""/><br /><sub><b>Rachitt Shah</b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=godslayer201" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/Swapnil-2001"><img src="https://avatars0.githubusercontent.com/u/53232360?v=4" width="100px;" alt=""/><br /><sub><b>Swapnil Sengupta</b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=Swapnil-2001" title="Documentation">📖</a></td>
   </tr>
 </table>
 
-<!-- markdownlint-restore -->
+<!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
