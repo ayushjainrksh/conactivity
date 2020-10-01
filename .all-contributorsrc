@@ -7,6 +7,7 @@
     "README.md"
   ],
   "imageSize": 100,
+  "badgeTemplate": "[logo]: https://img.shields.io/badge/all_contributors-<%= contributors.length %>-orange.svg?style=flat-square 'All Contributors'",
   "commit": true,
   "commitConvention": "none",
   "contributors": [
