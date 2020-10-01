@@ -50,6 +50,8 @@ const scrapeLinkedIn = async (data) => {
     args: ["--no-sandbox"],
   });
 
+  const waitUntilOptions = ["domcontentloaded", "networkidle2"];
+
   try {
     //Open a new tab
     const page = await browser.newPage();
@@ -81,7 +83,7 @@ const scrapeLinkedIn = async (data) => {
     try {
       //Visit the company's page and find the list of employees
       await page.goto(`https://www.linkedin.com/company/${data.company}`, {
-        waitUntil: ["domcontentloaded", "networkidle2"],
+        waitUntil: waitUntilOptions,
       });
 
       //Visit all employees from the company's page
@@ -100,87 +102,80 @@ const scrapeLinkedIn = async (data) => {
     await page.waitForNavigation();
 
     let profileLinks = [];
-    for (let pageNumber = 0; pageNumber < 2; pageNumber++) {
+    const pagesToVisit = 2;
+    for (let pageNumber = 0; pageNumber < pagesToVisit; pageNumber++) {
+      await autoScroll(page);
       //Fetch all profile links from the page
-      profileLinks = await page.evaluate(() => {
-        const profileListSelectors = [
-          ".search-result__info .search-result__result-link",
-          ".reusable-search__entity-results-list .entity-result__title-text a",
-        ];
-        const profileListNodes =
-          (document.querySelectorAll(profileListSelectors[0]).length &&
-            document.querySelectorAll(profileListSelectors[0])) ||
-          (document.querySelectorAll(profileListSelectors[1]).length &&
-            document.querySelectorAll(profileListSelectors[1]));
-        if (profileListNodes) {
-          //Store and return profile links
-          let profiles = [];
-          profileListNodes.forEach((profile) => {
-            if (profile.href) {
-              profiles.push(profile.href);
+      profileLinks.push(
+        ...(await page.evaluate(() => {
+          const profileListSelectors = [
+            ".search-result__info .search-result__result-link",
+            ".reusable-search__entity-results-list .entity-result__title-text a",
+          ];
+          const profileListNodes =
+            (document.querySelectorAll(profileListSelectors[0]).length &&
+              document.querySelectorAll(profileListSelectors[0])) ||
+            (document.querySelectorAll(profileListSelectors[1]).length &&
+              document.querySelectorAll(profileListSelectors[1]));
+          if (profileListNodes) {
+            //Store and return profile links
+            let profiles = [];
+            profileListNodes.forEach((profile) => {
+              if (profile.href) {
+                profiles.push(profile.href);
+              }
+            });
+            return profiles;
+          }
+        }))
+      );
+
+      if (pageNumber + 1 < pagesToVisit) {
+        await page.click(
+          ".artdeco-pagination__button.artdeco-pagination__button--next"
+        );
+        await page.waitForNavigation();
+      }
+    }
+
+    //Visit activity page and filter the list of active employees
+    let activeEmployees = [];
+    for (
+      let employeeUrl = 0;
+      employeeUrl < profileLinks.length;
+      employeeUrl++
+    ) {
+      let profileLink = profileLinks[employeeUrl];
+
+      //Visit activity page
+      await page.goto(profileLink + "/detail/recent-activity", {
+        waitUntil: waitUntilOptions,
+      });
+      //Find time of last activities of a user(likes, comments, posts)
+      const individualActivities = await page.evaluate(() => {
+        let timeOfActivity = [];
+        const timeSelector =
+          "div.feed-shared-actor__meta.relative >" +
+          " span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal" +
+          " > div > span.visually-hidden";
+        if (document.querySelectorAll(timeSelector)) {
+          document.querySelectorAll(timeSelector).forEach((item) => {
+            if (item.innerHTML) {
+              //Log all user activity within a week
+              if (
+                item.innerHTML.match(/[0-9] (minutes?|hours?|days?|week) ago/)
+              )
+                timeOfActivity.push(item.innerHTML);
             }
           });
-          return profiles;
         }
+        return timeOfActivity;
       });
 
-      //Visit activity page and filter the list of active employees
-      let activeEmployees = [];
-      for (
-        let employeeUrl = 0;
-        employeeUrl < profileLinks.length;
-        employeeUrl++
-      ) {
-        let profileLink = profileLinks[employeeUrl];
-
-        //Visit activity page
-        await page.goto(profileLink + "/detail/recent-activity", {
-          waitUntil: ["domcontentloaded", "networkidle2"],
-        });
-        //Find time of last activities of a user(likes, comments, posts)
-        const individualActivities = await page.evaluate(() => {
-          let timeOfActivity = [];
-          if (
-            document.querySelectorAll(
-              "div.feed-shared-actor__meta.relative > span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal > div > span.visually-hidden"
-            )
-          ) {
-            document
-              .querySelectorAll(
-                "div.feed-shared-actor__meta.relative > span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal > div > span.visually-hidden"
-              )
-              .forEach((item) => {
-                if (item.innerHTML) {
-                  //Log all user activity within a week
-                  if (
-                    item.innerHTML.match(
-                      /[0-9] (minutes?|hours?|days?|week) ago/
-                    )
-                  )
-                    timeOfActivity.push(item.innerHTML);
-                }
-              });
-          }
-          return timeOfActivity;
-        });
-
-        //Return links to active employees
-        if (individualActivities.length)
-          await activeEmployees.push(profileLink);
-
-        //Return to the search page
-        await page.goBack();
-      }
-
-      console.log(`Active users on page ${pageNumber}: `, activeEmployees);
-
-      //Navigate to the next page
-      profileLinks = [];
-      await page.click(
-        ".artdeco-pagination__button.artdeco-pagination__button--next"
-      );
-      await page.waitForNavigation();
+      //Return links to active employees
+      if (individualActivities.length) await activeEmployees.push(profileLink);
     }
+    console.log(`Active users : `, activeEmployees);
     await browser.close();
   } catch (err) {
     console.error("Oops! An error occured.");
@@ -188,6 +183,25 @@ const scrapeLinkedIn = async (data) => {
     await browser.close();
   }
 };
+
+async function autoScroll(page) {
+  await page.evaluate(async () => {
+    await new Promise((resolve) => {
+      let totalHeight = 0;
+      const distance = 100;
+      const timer = setInterval(() => {
+        const scrollHeight = document.body.scrollHeight;
+        window.scrollBy(0, distance);
+        totalHeight += distance;
+
+        if (totalHeight >= scrollHeight) {
+          clearInterval(timer);
+          resolve();
+        }
+      }, 100);
+    });
+  });
+}
 
 scrapeLinkedIn({
   username: process.env.EMAIL,
