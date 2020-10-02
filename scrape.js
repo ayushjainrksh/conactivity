@@ -135,7 +135,7 @@ const scrapeLinkedIn = async (data) => {
 
         //Visit activity page
         await page.goto(profileLink + "/detail/recent-activity", {
-          waitUntil: ["domcontentloaded"],
+          waitUntil: ["domcontentloaded", "networkidle2"],
         });
         //Find time of last activities of a user(likes, comments, posts)
         const individualActivities = await page.evaluate(() => {
