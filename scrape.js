@@ -107,11 +107,21 @@ const scrapeLinkedIn = async (data) => {
           ".search-result__info .search-result__result-link",
           ".reusable-search__entity-results-list .entity-result__title-text a",
         ];
-        const profileListNodes = undefined
-        for(let profileListSelectorIndex = 0; profileListSelectorIndex < profileListSelectors.length; profileListSelectorIndex++){
+        let profileListNodes = undefined;
+        for (
+          let profileListSelectorIndex = 0;
+          profileListSelectorIndex < profileListSelectors.length;
+          profileListSelectorIndex++
+        ) {
           // Breaking Loop when Profile Selector is Found to have data.
-          if(document.querySelectorAll(profileListSelectors[profileListSelectorIndex]).length > 0){
-            profileListNodes = profileListSelectors[profileListSelectorIndex]
+          if (
+            document.querySelectorAll(
+              profileListSelectors[profileListSelectorIndex]
+            ).length > 0
+          ) {
+            profileListNodes = document.querySelectorAll(
+              profileListSelectors[profileListSelectorIndex]
+            );
             break;
           }
         }
