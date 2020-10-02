@@ -17,7 +17,7 @@ const linkedinLogin = async (username, password, page) => {
   await page.click(".sign-in-form__submit-button");
 
   // Wait for page load
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     page.on("framenavigated", async () => {
       if (page.url().startsWith("https://www.linkedin.com/feed")) {
         // Save the session cookies
@@ -103,22 +103,23 @@ const scrapeLinkedIn = async (data) => {
     for (let pageNumber = 0; pageNumber < 2; pageNumber++) {
       //Fetch all profile links from the page
       profileLinks = await page.evaluate(() => {
-        if (
-          document.querySelectorAll(
-            ".search-result__info .search-result__result-link"
-          )
-        ) {
+        const profileListSelectors = [
+          ".search-result__info .search-result__result-link",
+          ".reusable-search__entity-results-list .entity-result__title-text a",
+        ];
+        const profileListNodes =
+          (document.querySelectorAll(profileListSelectors[0]).length &&
+            document.querySelectorAll(profileListSelectors[0])) ||
+          (document.querySelectorAll(profileListSelectors[1]).length &&
+            document.querySelectorAll(profileListSelectors[1]));
+        if (profileListNodes) {
           //Store and return profile links
           let profiles = [];
-          document
-            .querySelectorAll(
-              ".search-result__info .search-result__result-link"
-            )
-            .forEach((profile) => {
-              if (profile.href) {
-                profiles.push(profile.href);
-              }
-            });
+          profileListNodes.forEach((profile) => {
+            if (profile.href) {
+              profiles.push(profile.href);
+            }
+          });
           return profiles;
         }
       });
@@ -133,8 +134,9 @@ const scrapeLinkedIn = async (data) => {
         let profileLink = profileLinks[employeeUrl];
 
         //Visit activity page
-        await page.goto(profileLink + "detail/recent-activity");
-
+        await page.goto(profileLink + "/detail/recent-activity", {
+          waitUntil: ["domcontentloaded"],
+        });
         //Find time of last activities of a user(likes, comments, posts)
         const individualActivities = await page.evaluate(() => {
           let timeOfActivity = [];
