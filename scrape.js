@@ -142,12 +142,12 @@ const scrapeLinkedIn = async (data) => {
           let timeOfActivity = [];
           if (
             document.querySelectorAll(
-              "div.feed-shared-actor__meta.relative > span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal > div > span.visually-hidden"
+              "div.feed-shared-actor__meta.relative > span.feed-shared-actor__sub-description > span > .visually-hidden"
             )
           ) {
             document
               .querySelectorAll(
-                "div.feed-shared-actor__meta.relative > span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal > div > span.visually-hidden"
+                "div.feed-shared-actor__meta.relative > span.feed-shared-actor__sub-description > span > .visually-hidden"
               )
               .forEach((item) => {
                 if (item.innerHTML) {
