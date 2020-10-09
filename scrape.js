@@ -38,6 +38,135 @@ const linkedinLogin = async (username, password, page) => {
   });
 };
 
+const autoScroll = async (page) => {
+  await page.evaluate(async () => {
+    await new Promise((resolve) => {
+      let totalHeight = 0;
+      const distance = 100;
+      const timer = setInterval(() => {
+        const scrollHeight = document.body.scrollHeight;
+        window.scrollBy(0, distance);
+        totalHeight += distance;
+
+        if (totalHeight >= scrollHeight) {
+          clearInterval(timer);
+          resolve();
+        }
+      }, 100);
+    });
+  });
+};
+
+const fetchProfileLinks = async (page, pagesToVisit = 2) => {
+  let profileLinks = [];
+  for (let pageNumber = 0; pageNumber < pagesToVisit; pageNumber++) {
+    await autoScroll(page);
+
+    //Fetch all profile links from the page
+    profileLinks.push(
+      ...(await page.evaluate(() => {
+        //Multiple selectors for different displays of LinkedIn(see issue #20)
+        const profileListSelectors = [
+          ".search-result__info .search-result__result-link",
+          ".reusable-search__entity-results-list .entity-result__title-text a",
+        ];
+        let profileListNodes = null;
+        for (
+          let profileListSelectorIndex = 0;
+          profileListSelectorIndex < profileListSelectors.length;
+          profileListSelectorIndex++
+        ) {
+          //Break the loop where profile selector matches
+          if (
+            document.querySelectorAll(
+              profileListSelectors[profileListSelectorIndex]
+            ).length > 0
+          ) {
+            profileListNodes = document.querySelectorAll(
+              profileListSelectors[profileListSelectorIndex]
+            );
+            break;
+          }
+        }
+        if (profileListNodes) {
+          //Store and return profile links from nodes
+          let profiles = [];
+          profileListNodes.forEach((profile) => {
+            if (profile.href) {
+              profiles.push(profile.href);
+            }
+          });
+          return profiles;
+        }
+      }))
+    );
+
+    if (pageNumber < pagesToVisit - 1) {
+      //Click on next button on the bottom of the profiles page
+      await page.click(
+        ".artdeco-pagination__button.artdeco-pagination__button--next"
+      );
+      await page.waitForNavigation();
+    }
+  }
+  return profileLinks;
+};
+
+const fetchEachProfileActivity = async (
+  page,
+  profileLinks,
+  waitUntilOptions
+) => {
+  let activeEmployees = [];
+  //Visit each employee's profile
+  for (let employeeUrl = 0; employeeUrl < profileLinks.length; employeeUrl++) {
+    let profileLink = profileLinks[employeeUrl];
+
+    //Visit activity page
+    await page.goto(profileLink + "/detail/recent-activity", {
+      waitUntil: waitUntilOptions,
+    });
+    //Find time of last activities of a user(likes, comments, posts)
+    const individualActivities = await page.evaluate(() => {
+      let timeOfActivity = [];
+      const timeSelector =
+        "div.feed-shared-actor__meta.relative >" +
+        " span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal" +
+        " > span > span.visually-hidden";
+      if (document.querySelectorAll(timeSelector)) {
+        document.querySelectorAll(timeSelector).forEach((item) => {
+          if (item.innerHTML) {
+            //Log all user activity within a week
+            if (item.innerHTML.match(/[0-9] (minutes?|hours?|days?|week) ago/))
+              timeOfActivity.push(item.innerHTML);
+          }
+        });
+      }
+      return timeOfActivity;
+    });
+
+    //Return links to active employees
+    if (individualActivities.length) await activeEmployees.push(profileLink);
+  }
+  return activeEmployees;
+};
+
+const saveProfiles = (activeEmployees) => {
+  const time = Date.now();
+  const fileName = `./output/${process.env.COMPANY}${time}.json`; // generate the a unique fileName for each run of the script
+
+  //Save all active employee profiles to a file
+  if (!fs.existsSync("./output")) {
+    // check for existing output directory, create it if necessary
+    fs.mkdirSync("./output");
+  }
+
+  const output = { activeProfiles: activeEmployees };
+  fs.appendFile(fileName, JSON.stringify(output, null, "\t"), (err) => {
+    if (err) throw err;
+  });
+};
+
 /**
  * Scrape LinkedIn to find active users for a given company
  * @param {{email: string, password: string, company: string}} data An object with login credentials and the company's LinkedIn handle
@@ -51,10 +180,6 @@ const scrapeLinkedIn = async (data) => {
   });
 
   const waitUntilOptions = ["domcontentloaded", "networkidle2"];
-  const time = Date.now();
-  const fileName = `./output/${process.env.COMPANY}${time}.json`; // generate the a unique fileName for each run of the script
-  let output = {};
-  let pages = [];
 
   try {
     //Open a new tab
@@ -105,120 +230,19 @@ const scrapeLinkedIn = async (data) => {
 
     await page.waitForNavigation();
 
-    let profileLinks = [];
-    const pagesToVisit = 2;
-    for (let pageNumber = 0; pageNumber < pagesToVisit; pageNumber++) {
-      await autoScroll(page);
-      //Fetch all profile links from the page
-      profileLinks.push(
-        ...(await page.evaluate(() => {
-          const profileListSelectors = [
-            ".search-result__info .search-result__result-link",
-            ".reusable-search__entity-results-list .entity-result__title-text a",
-          ];
-          let profileListNodes = undefined;
-          for (
-            let profileListSelectorIndex = 0;
-            profileListSelectorIndex < profileListSelectors.length;
-            profileListSelectorIndex++
-          ) {
-            // Breaking Loop when Profile Selector is Found to have data.
-            if (
-              document.querySelectorAll(
-                profileListSelectors[profileListSelectorIndex]
-              ).length > 0
-            ) {
-              profileListNodes = document.querySelectorAll(
-                profileListSelectors[profileListSelectorIndex]
-              );
-              break;
-            }
-          }
-          if (profileListNodes) {
-            //Store and return profile links
-            let profiles = [];
-            profileListNodes.forEach((profile) => {
-              if (profile.href) {
-                profiles.push(profile.href);
-              }
-            });
-            return profiles;
-          }
-          if (profileListNodes) {
-            //Store and return profile links
-            let profiles = [];
-            profileListNodes.forEach((profile) => {
-              if (profile.href) {
-                profiles.push(profile.href);
-              }
-            });
-            return profiles;
-          }
-        }))
-      );
-
-      if (pageNumber + 1 < pagesToVisit) {
-        await page.click(
-          ".artdeco-pagination__button.artdeco-pagination__button--next"
-        );
-        await page.waitForNavigation();
-      }
-    }
+    //Fetch all profile links
+    let profileLinks = await fetchProfileLinks(page);
 
     //Visit activity page and filter the list of active employees
-    let activeEmployees = [];
-    for (
-      let employeeUrl = 0;
-      employeeUrl < profileLinks.length;
-      employeeUrl++
-    ) {
-      let profileLink = profileLinks[employeeUrl];
+    let activeEmployees = await fetchEachProfileActivity(
+      page,
+      profileLinks,
+      waitUntilOptions
+    );
+    console.log("Active users : ", activeEmployees);
 
-      //Visit activity page
-      await page.goto(profileLink + "/detail/recent-activity", {
-        waitUntil: waitUntilOptions,
-      });
-      //Find time of last activities of a user(likes, comments, posts)
-      const individualActivities = await page.evaluate(() => {
-        let timeOfActivity = [];
-        const timeSelector =
-          "div.feed-shared-actor__meta.relative >" +
-          " span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal" +
-          " > span > span.visually-hidden";
-        if (document.querySelectorAll(timeSelector)) {
-          document.querySelectorAll(timeSelector).forEach((item) => {
-            if (item.innerHTML) {
-              //Log all user activity within a week
-              if (
-                item.innerHTML.match(/[0-9] (minutes?|hours?|days?|week) ago/)
-              )
-                timeOfActivity.push(item.innerHTML);
-            }
-          });
-        }
-        return timeOfActivity;
-      });
-
-      //Return links to active employees
-      if (individualActivities.length) await activeEmployees.push(profileLink);
-    }
-    console.log(`Active users : `, activeEmployees);
-    if (!fs.existsSync("./output")) {
-      // check for existing output directory, create it if necessary
-      fs.mkdirSync("./output");
-    }
-
-    const pageName = `page${0}`;
-    let currPage = [];
-    activeEmployees.forEach((employee) => {
-      currPage.push(employee);
-    });
-    pages.push({ [pageName]: currPage });
-
-    output = { activeProfiles: pages };
-    fs.appendFile(fileName, JSON.stringify(output, null, "\t"), (err) => {
-      if (err) throw err;
-    });
+    //Save profiles to a file
+    await saveProfiles(activeEmployees);
 
     await browser.close();
   } catch (err) {
@@ -227,25 +251,6 @@ const scrapeLinkedIn = async (data) => {
     await browser.close();
   }
 };
-
-async function autoScroll(page) {
-  await page.evaluate(async () => {
-    await new Promise((resolve) => {
-      let totalHeight = 0;
-      const distance = 100;
-      const timer = setInterval(() => {
-        const scrollHeight = document.body.scrollHeight;
-        window.scrollBy(0, distance);
-        totalHeight += distance;
-
-        if (totalHeight >= scrollHeight) {
-          clearInterval(timer);
-          resolve();
-        }
-      }, 100);
-    });
-  });
-}
 
 scrapeLinkedIn({
   username: process.env.EMAIL,
