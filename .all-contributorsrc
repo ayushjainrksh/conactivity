@@ -58,6 +58,15 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "amandesai01",
+      "name": "Aman Desai",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/39585600?v=4",
+      "profile": "http://amandesai01.github.io",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
