@@ -58,6 +58,15 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "cwille97",
+      "name": "Cedric Wille",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/24487628?v=4",
+      "profile": "https://cwille97.github.io",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
