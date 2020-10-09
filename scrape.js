@@ -1,7 +1,7 @@
 //Imports
 const puppeteer = require("puppeteer");
 const jsonfile = require("jsonfile");
-const fileExistSync = require("fs").existsSync;
+const fs = require("fs");
 require("dotenv").config();
 
 /**
@@ -51,6 +51,10 @@ const scrapeLinkedIn = async (data) => {
   });
 
   const waitUntilOptions = ["domcontentloaded", "networkidle2"];
+  const time = Date.now();
+  const fileName = `./output/${process.env.COMPANY}${time}.json`; // generate the a unique fileName for each run of the script
+  let output = {};
+  let pages = [];
 
   try {
     //Open a new tab
@@ -61,7 +65,7 @@ const scrapeLinkedIn = async (data) => {
     await page.setDefaultNavigationTimeout(0);
 
     //Check if cookies are stored in cookie.json and use that data to skip login
-    const previousSession = fileExistSync("./cookie.json");
+    const previousSession = fs.existsSync("./cookie.json");
     if (previousSession) {
       //Load the cookies
       const cookiesArr = require(`.${"/cookie.json"}`);
@@ -112,11 +116,34 @@ const scrapeLinkedIn = async (data) => {
             ".search-result__info .search-result__result-link",
             ".reusable-search__entity-results-list .entity-result__title-text a",
           ];
-          const profileListNodes =
-            (document.querySelectorAll(profileListSelectors[0]).length &&
-              document.querySelectorAll(profileListSelectors[0])) ||
-            (document.querySelectorAll(profileListSelectors[1]).length &&
-              document.querySelectorAll(profileListSelectors[1]));
+          let profileListNodes = undefined;
+          for (
+            let profileListSelectorIndex = 0;
+            profileListSelectorIndex < profileListSelectors.length;
+            profileListSelectorIndex++
+          ) {
+            // Breaking Loop when Profile Selector is Found to have data.
+            if (
+              document.querySelectorAll(
+                profileListSelectors[profileListSelectorIndex]
+              ).length > 0
+            ) {
+              profileListNodes = document.querySelectorAll(
+                profileListSelectors[profileListSelectorIndex]
+              );
+              break;
+            }
+          }
+          if (profileListNodes) {
+            //Store and return profile links
+            let profiles = [];
+            profileListNodes.forEach((profile) => {
+              if (profile.href) {
+                profiles.push(profile.href);
+              }
+            });
+            return profiles;
+          }
           if (profileListNodes) {
             //Store and return profile links
             let profiles = [];
@@ -157,7 +184,7 @@ const scrapeLinkedIn = async (data) => {
         const timeSelector =
           "div.feed-shared-actor__meta.relative >" +
           " span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal" +
-          " > div > span.visually-hidden";
+          " > span > span.visually-hidden";
         if (document.querySelectorAll(timeSelector)) {
           document.querySelectorAll(timeSelector).forEach((item) => {
             if (item.innerHTML) {
@@ -176,6 +203,23 @@ const scrapeLinkedIn = async (data) => {
       if (individualActivities.length) await activeEmployees.push(profileLink);
     }
     console.log(`Active users : `, activeEmployees);
+    if (!fs.existsSync("./output")) {
+      // check for existing output directory, create it if necessary
+      fs.mkdirSync("./output");
+    }
+
+    const pageName = `page${0}`;
+    let currPage = [];
+    activeEmployees.forEach((employee) => {
+      currPage.push(employee);
+    });
+    pages.push({ [pageName]: currPage });
+
+    output = { activeProfiles: pages };
+    fs.appendFile(fileName, JSON.stringify(output, null, "\t"), (err) => {
+      if (err) throw err;
+    });
+
     await browser.close();
   } catch (err) {
     console.error("Oops! An error occured.");
