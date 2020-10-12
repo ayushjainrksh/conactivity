@@ -23,7 +23,7 @@ const linkedinLogin = async (username, password, page) => {
         // Save the session cookies
         const cookiesObject = await page.cookies();
         // Store cookies in cookie.json to persist the session
-        await jsonfile.writeFile(
+        jsonfile.writeFile(
           "./cookie.json",
           cookiesObject,
           { spaces: 2 },
@@ -124,8 +124,8 @@ const fetchProfileLinks = async (page, pagesToVisit = 2) => {
 /**
  * Get all activity of the profile
  * @param {Promise} page Promise of Browser page
- * @param {Array} profileLinks 
- * @param {String[]} waitUntilOptions 
+ * @param {Array} profileLinks
+ * @param {String[]} waitUntilOptions
  */
 const fetchEachProfileActivity = async (
   page,
@@ -161,7 +161,7 @@ const fetchEachProfileActivity = async (
     });
 
     //Return links to active employees
-    if (individualActivities.length) await activeEmployees.push(profileLink);
+    if (individualActivities.length) activeEmployees.push(profileLink);
   }
   return activeEmployees;
 };
@@ -206,7 +206,7 @@ const scrapeLinkedIn = async (data) => {
 
     //Page configurations
     await page.setViewport({ width: 1200, height: 1200 });
-    await page.setDefaultNavigationTimeout(0);
+    page.setDefaultNavigationTimeout(0);
 
     //Check if cookies are stored in cookie.json and use that data to skip login
     const previousSession = fs.existsSync("./cookie.json");
@@ -261,7 +261,7 @@ const scrapeLinkedIn = async (data) => {
     console.log("Active users : ", activeEmployees);
 
     //Save profiles to a file
-    await saveProfiles(activeEmployees);
+    saveProfiles(activeEmployees);
 
     await browser.close();
   } catch (err) {
