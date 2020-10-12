@@ -62,7 +62,7 @@ const autoScroll = async (page) => {
 };
 
 /**
- * 
+ * Fetch all profile links
  * @param {Promise} page Promise of Browser page
  * @param {Number} pagesToVisit Static param, setted to 2
  */
