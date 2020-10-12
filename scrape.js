@@ -38,6 +38,10 @@ const linkedinLogin = async (username, password, page) => {
   });
 };
 
+/**
+ * Automating scroll inside a page
+ * @param {Promise} page Promise of Browser page
+ */
 const autoScroll = async (page) => {
   await page.evaluate(async () => {
     await new Promise((resolve) => {
@@ -57,6 +61,11 @@ const autoScroll = async (page) => {
   });
 };
 
+/**
+ * 
+ * @param {Promise} page Promise of Browser page
+ * @param {Number} pagesToVisit Static param, setted to 2
+ */
 const fetchProfileLinks = async (page, pagesToVisit = 2) => {
   let profileLinks = [];
   for (let pageNumber = 0; pageNumber < pagesToVisit; pageNumber++) {
@@ -112,6 +121,12 @@ const fetchProfileLinks = async (page, pagesToVisit = 2) => {
   return profileLinks;
 };
 
+/**
+ * Get all activity of the profile
+ * @param {Promise} page Promise of Browser page
+ * @param {Array} profileLinks 
+ * @param {String[]} waitUntilOptions 
+ */
 const fetchEachProfileActivity = async (
   page,
   profileLinks,
@@ -151,6 +166,10 @@ const fetchEachProfileActivity = async (
   return activeEmployees;
 };
 
+/**
+ * Save profiles data in a JSON file
+ * @param {Array} activeEmployees List of active employees
+ */
 const saveProfiles = (activeEmployees) => {
   const time = Date.now();
   const fileName = `./output/${process.env.COMPANY}${time}.json`; // generate the a unique fileName for each run of the script
