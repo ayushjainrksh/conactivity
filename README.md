@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[logo]: https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square 'All Contributors'
+[logo]: https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square 'All Contributors'
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 *Hi :wave:, this project is being actively developed and maintained. If you would like to receive updates about the progress, you can follow [@ayushjn_](https://twitter.com/ayushjn_) on Twitter :bust_in_silhouette:.*
@@ -119,6 +119,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://rajkumaar.co.in"><img src="https://avatars1.githubusercontent.com/u/37476886?v=4" width="100px;" alt=""/><br /><sub><b>Rajkumar S</b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=rajkumaar23" title="Code">💻</a> <a href="https://github.com/ayushjainrksh/conactivity/issues?q=author%3Arajkumaar23" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://cwille97.github.io"><img src="https://avatars2.githubusercontent.com/u/24487628?v=4" width="100px;" alt=""/><br /><sub><b>Cedric Wille</b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=cwille97" title="Code">💻</a></td>
     <td align="center"><a href="http://amandesai01.github.io"><img src="https://avatars3.githubusercontent.com/u/39585600?v=4" width="100px;" alt=""/><br /><sub><b>Aman Desai</b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=amandesai01" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/StaniPetrosyan"><img src="https://avatars2.githubusercontent.com/u/40838627?v=4" width="100px;" alt=""/><br /><sub><b>Stanislav Petrosyan</b></sub></a><br /><a href="https://github.com/ayushjainrksh/conactivity/commits?author=StaniPetrosyan" title="Documentation">📖</a></td>
   </tr>
 </table>
 
