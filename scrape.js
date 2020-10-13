@@ -23,7 +23,7 @@ const linkedinLogin = async (username, password, page) => {
         // Save the session cookies
         const cookiesObject = await page.cookies();
         // Store cookies in cookie.json to persist the session
-        await jsonfile.writeFile(
+        jsonfile.writeFile(
           "./cookie.json",
           cookiesObject,
           { spaces: 2 },
@@ -38,6 +38,10 @@ const linkedinLogin = async (username, password, page) => {
   });
 };
 
+/**
+ * Automating scroll inside a page
+ * @param {Promise} page Promise of Browser page
+ */
 const autoScroll = async (page) => {
   await page.evaluate(async () => {
     await new Promise((resolve) => {
@@ -57,6 +61,11 @@ const autoScroll = async (page) => {
   });
 };
 
+/**
+ * Fetch all profile links
+ * @param {Promise} page Promise of Browser page
+ * @param {Number} pagesToVisit Specifies the number of page to scrape (defaults to 2)
+ */
 const fetchProfileLinks = async (page, pagesToVisit = 2) => {
   let profileLinks = [];
   for (let pageNumber = 0; pageNumber < pagesToVisit; pageNumber++) {
@@ -112,6 +121,12 @@ const fetchProfileLinks = async (page, pagesToVisit = 2) => {
   return profileLinks;
 };
 
+/**
+ * Get all activity of the profile
+ * @param {Promise} page Promise of Browser page
+ * @param {String[]} profileLinks Array with all profile links that was scraped
+ * @param {String[]} waitUntilOptions Contains puppeteer options
+ */
 const fetchEachProfileActivity = async (
   page,
   profileLinks,
@@ -146,11 +161,15 @@ const fetchEachProfileActivity = async (
     });
 
     //Return links to active employees
-    if (individualActivities.length) await activeEmployees.push(profileLink);
+    if (individualActivities.length) activeEmployees.push(profileLink);
   }
   return activeEmployees;
 };
 
+/**
+ * Save profiles data in a JSON file
+ * @param {String[]} activeEmployees List of active employees
+ */
 const saveProfiles = (activeEmployees) => {
   const time = Date.now();
   const fileName = `./output/${process.env.COMPANY}${time}.json`; // generate the a unique fileName for each run of the script
@@ -187,7 +206,7 @@ const scrapeLinkedIn = async (data) => {
 
     //Page configurations
     await page.setViewport({ width: 1200, height: 1200 });
-    await page.setDefaultNavigationTimeout(0);
+    page.setDefaultNavigationTimeout(0);
 
     //Check if cookies are stored in cookie.json and use that data to skip login
     const previousSession = fs.existsSync("./cookie.json");
@@ -242,7 +261,7 @@ const scrapeLinkedIn = async (data) => {
     console.log("Active users : ", activeEmployees);
 
     //Save profiles to a file
-    await saveProfiles(activeEmployees);
+    saveProfiles(activeEmployees);
 
     await browser.close();
   } catch (err) {
