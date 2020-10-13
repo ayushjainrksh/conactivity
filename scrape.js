@@ -122,10 +122,11 @@ const fetchProfileLinks = async (page, pagesToVisit = 2) => {
 };
 
 /**
- * Get all activity of the profile
+ * Filter and return active employees (any activity withing 1 week)
+ * from all employees by visiting their activity page
  * @param {Promise} page Promise of Browser page
- * @param {String[]} profileLinks Array with all profile links that was scraped
- * @param {String[]} waitUntilOptions Contains puppeteer options
+ * @param {Array.<String>} profileLinks A list of scraped profile links
+ * @param {Array.<String>} waitUntilOptions Puppeteer options
  */
 const fetchEachProfileActivity = async (
   page,
@@ -167,8 +168,8 @@ const fetchEachProfileActivity = async (
 };
 
 /**
- * Save profiles data in a JSON file
- * @param {String[]} activeEmployees List of active employees
+ * Save profile links to a JSON file
+ * @param {Array.<String>} activeEmployees List of active employees
  */
 const saveProfiles = (activeEmployees) => {
   const time = Date.now();
