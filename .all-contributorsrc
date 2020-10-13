@@ -76,6 +76,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "StaniPetrosyan",
+      "name": "Stanislav Petrosyan",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/40838627?v=4",
+      "profile": "https://github.com/StaniPetrosyan",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
