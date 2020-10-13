@@ -64,7 +64,7 @@ const autoScroll = async (page) => {
 /**
  * Fetch all profile links
  * @param {Promise} page Promise of Browser page
- * @param {Number} pagesToVisit Static param, setted to 2
+ * @param {Number} pagesToVisit Specifies the number of page to scrape (defaults to 2)
  */
 const fetchProfileLinks = async (page, pagesToVisit = 2) => {
   let profileLinks = [];
@@ -124,8 +124,8 @@ const fetchProfileLinks = async (page, pagesToVisit = 2) => {
 /**
  * Get all activity of the profile
  * @param {Promise} page Promise of Browser page
- * @param {Array} profileLinks
- * @param {String[]} waitUntilOptions
+ * @param {String[]} profileLinks Array with all profile links that was scraped
+ * @param {String[]} waitUntilOptions Contains puppeteer options
  */
 const fetchEachProfileActivity = async (
   page,
@@ -168,7 +168,7 @@ const fetchEachProfileActivity = async (
 
 /**
  * Save profiles data in a JSON file
- * @param {Array} activeEmployees List of active employees
+ * @param {String[]} activeEmployees List of active employees
  */
 const saveProfiles = (activeEmployees) => {
   const time = Date.now();
