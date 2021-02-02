@@ -43,7 +43,7 @@ Try it out!
 ### Usage
 
 - Clone the repo.
-  #### `https://github.com/ayushjainrksh/conactivity.git`
+  #### `git clone https://github.com/ayushjainrksh/conactivity.git`
 - Navigate to the cloned repo.
   #### `cd conactivity`
 - In the root directory, install dependencies.
