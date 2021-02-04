@@ -236,14 +236,15 @@ const scrapeLinkedIn = async (data) => {
       });
 
       //Visit all employees from the company's page
-      await page.click("a.ember-view.link-without-visited-state.inline-block");
+      await page.click(".artdeco-card__actions>ul>li:nth-child(6)");
     } catch (e) {
       console.error(
         "Oops! An error occured while trying to find the company's page." +
           "\n" +
           "The reason for this error can be either the browser was closed while execution or you entered invalid data in env file." +
           "\n" +
-          "Please check the LinkedIn handle of the company you're trying to find and your credentials and try again."
+          "Please check the LinkedIn handle of the company you're trying to find and your credentials and try again.",
+        e
       );
       await browser.close();
     }
