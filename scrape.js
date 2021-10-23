@@ -102,7 +102,8 @@ const fetchProfileLinks = async (page, pagesToVisit = 2) => {
           let profiles = [];
           profileListNodes.forEach((profile) => {
             if (profile.href) {
-              profiles.push(profile.href);
+              // Remove query params from URL
+              profiles.push(profile.href.split("?")[0]);
             }
           });
           return profiles;
@@ -236,7 +237,9 @@ const scrapeLinkedIn = async (data) => {
       });
 
       //Visit all employees from the company's page
-      await page.click("a.ember-view.link-without-visited-state.inline-block");
+      await page.click(
+        "a.ember-view.org-top-card-secondary-content__see-all-link"
+      );
     } catch (e) {
       console.error(
         "Oops! An error occured while trying to find the company's page." +
