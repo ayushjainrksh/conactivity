@@ -2,6 +2,8 @@
 const puppeteer = require("puppeteer");
 const jsonfile = require("jsonfile");
 const fs = require("fs");
+const rxjs = require("rxjs");
+const { mergeMap, toArray, filter } = require("rxjs/operators");
 require("dotenv").config();
 
 /**
@@ -128,44 +130,51 @@ const fetchProfileLinks = async (page, pagesToVisit = 2) => {
  * @param {Promise} page Promise of Browser page
  * @param {Array.<String>} profileLinks A list of scraped profile links
  * @param {Array.<String>} waitUntilOptions Puppeteer options
+ * @param {Number} numOfParallelTabs Number of profiles to visit in parallel tabs
  */
-const fetchEachProfileActivity = async (
+const fetchEachProfileActivityInParallel = async (
   page,
   profileLinks,
-  waitUntilOptions
+  waitUntilOptions,
+  numOfParallelTabs = 5
 ) => {
-  let activeEmployees = [];
-  //Visit each employee's profile
-  for (let employeeUrl = 0; employeeUrl < profileLinks.length; employeeUrl++) {
-    let profileLink = profileLinks[employeeUrl];
+  return rxjs.from(profileLinks).pipe(
+    mergeMap(async (profileLink) => {
+      //Visit activity page
+      await page.goto(profileLink + "/detail/recent-activity", {
+        waitUntil: waitUntilOptions,
+      });
 
-    //Visit activity page
-    await page.goto(profileLink + "/detail/recent-activity", {
-      waitUntil: waitUntilOptions,
-    });
-    //Find time of last activities of a user(likes, comments, posts)
-    const individualActivities = await page.evaluate(() => {
-      let timeOfActivity = [];
-      const timeSelector =
-        "div.feed-shared-actor__meta.relative >" +
-        " span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal" +
-        " > span > span.visually-hidden";
-      if (document.querySelectorAll(timeSelector)) {
-        document.querySelectorAll(timeSelector).forEach((item) => {
-          if (item.innerHTML) {
-            //Log all user activity within a week
-            if (item.innerHTML.match(/[0-9] (minutes?|hours?|days?|week) ago/))
-              timeOfActivity.push(item.innerHTML);
-          }
-        });
+      //Find time of last activities of a user(likes, comments, posts)
+      const individualActivities = await page.evaluate(() => {
+        let timeOfActivity = [];
+        const timeSelector =
+          "div.feed-shared-actor__meta.relative >" +
+          " span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal" +
+          " > span > span.visually-hidden";
+        if (document.querySelectorAll(timeSelector)) {
+          document.querySelectorAll(timeSelector).forEach((item) => {
+            if (item.innerHTML) {
+              //Log all user activity within a week
+              if (
+                item.innerHTML.match(/[0-9] (minutes?|hours?|days?|week) ago/)
+              )
+                timeOfActivity.push(item.innerHTML);
+            }
+          });
+        }
+        return timeOfActivity;
+      });
+      //Return links to active employees
+      if (individualActivities.length) {
+        return profileLink;
+      } else {
+        return null;
       }
-      return timeOfActivity;
-    });
-
-    //Return links to active employees
-    if (individualActivities.length) activeEmployees.push(profileLink);
-  }
-  return activeEmployees;
+    }, numOfParallelTabs),
+    filter((profileLink) => !!profileLink),
+    toArray()
+  );
 };
 
 /**
@@ -254,14 +263,15 @@ const scrapeLinkedIn = async (data) => {
     await page.waitForNavigation();
 
     //Fetch all profile links
-    let profileLinks = await fetchProfileLinks(page);
+    const profileLinks = await fetchProfileLinks(page);
 
     //Visit activity page and filter the list of active employees
-    let activeEmployees = await fetchEachProfileActivity(
+    const activeEmployeesObservable = await fetchEachProfileActivityInParallel(
       page,
       profileLinks,
       waitUntilOptions
     );
+    const activeEmployees = await rxjs.lastValueFrom(activeEmployeesObservable);
     console.log("Active users : ", activeEmployees);
 
     //Save profiles to a file
