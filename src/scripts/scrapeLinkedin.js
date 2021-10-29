@@ -2,9 +2,9 @@ const puppeteer = require("puppeteer");
 const fs = require("fs");
 const rxjs = require("rxjs");
 const { mergeMap, toArray, filter } = require("rxjs/operators");
-const { saveProfiles } = require("../utils/fileIO");
 const { linkedinLogin } = require("./login");
-const { autoScroll } = require("../utils/scoll");
+const { urls, selectors } = require("../constants");
+const { fileIO, formatters, scroll } = require("../utils");
 
 /**
  * Fetch all profile links
@@ -14,16 +14,13 @@ const { autoScroll } = require("../utils/scoll");
 const fetchProfileLinks = async (page, pagesToVisit = 2) => {
   let profileLinks = [];
   for (let pageNumber = 0; pageNumber < pagesToVisit; pageNumber++) {
-    await autoScroll(page);
+    await scroll.autoScroll(page);
 
     //Fetch all profile links from the page
     profileLinks.push(
       ...(await page.evaluate(() => {
         //Multiple selectors for different displays of LinkedIn(see issue #20)
-        const profileListSelectors = [
-          ".search-result__info .search-result__result-link",
-          ".reusable-search__entity-results-list .entity-result__title-text a",
-        ];
+        const profileListSelectors = selectors.PROFILE_LINK_SELECTORS;
         let profileListNodes = null;
         for (
           let profileListSelectorIndex = 0;
@@ -48,7 +45,7 @@ const fetchProfileLinks = async (page, pagesToVisit = 2) => {
           profileListNodes.forEach((profile) => {
             if (profile.href) {
               // Remove query params from URL
-              profiles.push(profile.href.split("?")[0]);
+              profiles.push(formatters.removeQueryParamsFromUrl(profile.href));
             }
           });
           return profiles;
@@ -58,9 +55,7 @@ const fetchProfileLinks = async (page, pagesToVisit = 2) => {
 
     if (pageNumber < pagesToVisit - 1) {
       //Click on next button on the bottom of the profiles page
-      await page.click(
-        ".artdeco-pagination__button.artdeco-pagination__button--next"
-      );
+      await page.click(selectors.BOTTOM_NAV_NEXT_BUTTON);
       await page.waitForNavigation();
     }
   }
@@ -84,19 +79,15 @@ const fetchEachProfileActivityInParallel = async (
   return rxjs.from(profileLinks).pipe(
     mergeMap(async (profileLink) => {
       //Visit activity page
-      await page.goto(profileLink + "/detail/recent-activity", {
+      await page.goto(urls.userProfileUrl(profileLink), {
         waitUntil: waitUntilOptions,
       });
 
       //Find time of last activities of a user(likes, comments, posts)
       const individualActivities = await page.evaluate(() => {
         let timeOfActivity = [];
-        const timeSelector =
-          "div.feed-shared-actor__meta.relative >" +
-          " span.feed-shared-actor__sub-description.t-12.t-black--light.t-normal" +
-          " > span > span.visually-hidden";
-        if (document.querySelectorAll(timeSelector)) {
-          document.querySelectorAll(timeSelector).forEach((item) => {
+        if (document.querySelectorAll(selectors.TIME_SELECTOR)) {
+          document.querySelectorAll(selectors.TIME_SELECTOR).forEach((item) => {
             if (item.innerHTML) {
               //Log all user activity within a week
               if (
@@ -156,7 +147,7 @@ const scrapeLinkedIn = async (data) => {
       }
     } else {
       //Visit LinkedIn
-      await page.goto(`https://www.linkedin.com/`);
+      await page.goto(urls.LINKEDIN_URL);
 
       //Login to your account
       await linkedinLogin(data.username, data.password, page);
@@ -164,14 +155,13 @@ const scrapeLinkedIn = async (data) => {
 
     try {
       //Visit the company's page and find the list of employees
-      await page.goto(`https://www.linkedin.com/company/${data.company}`, {
+      console.log(urls);
+      await page.goto(urls.companyProfileUrl(data.company), {
         waitUntil: waitUntilOptions,
       });
 
       //Visit all employees from the company's page
-      await page.click(
-        "a.ember-view.org-top-card-secondary-content__see-all-link"
-      );
+      await page.click(selectors.VISIT_ALL_EMPLOYEES);
     } catch (e) {
       console.error(
         "Oops! An error occured while trying to find the company's page." +
@@ -198,7 +188,7 @@ const scrapeLinkedIn = async (data) => {
     console.log("Active users : ", activeEmployees);
 
     //Save profiles to a file
-    saveProfiles(activeEmployees);
+    fileIO.saveProfiles(activeEmployees);
 
     await browser.close();
   } catch (err) {
@@ -209,5 +199,7 @@ const scrapeLinkedIn = async (data) => {
 };
 
 module.exports = {
+  fetchProfileLinks,
+  fetchEachProfileActivityInParallel,
   scrapeLinkedIn,
 };
